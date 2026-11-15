@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashScreen">
+
+    <!-- Splash -->
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.miningmafia.app.ui.splash.SplashFragment"
+        android:label="SplashFragment">
+        <action
+            android:id="@+id/action_splash_to_auth"
+            app:destination="@id/authScreen" />
+        <action
+            android:id="@+id/action_splash_to_home"
+            app:destination="@id/homeScreen" />
+    </fragment>
+
+    <!-- Auth (shown when not signed in) -->
+    <fragment
+        android:id="@+id/authScreen"
+        android:name="com.miningmafia.app.ui.auth.AuthFragment"
+        android:label="AuthFragment">
+        <action
+            android:id="@+id/action_auth_to_home"
+            app:destination="@id/homeScreen" />
+    </fragment>
+
+    <!-- Main app (shown when signed in) -->
+    <fragment
+        android:id="@+id/homeScreen"
+        android:name="com.miningmafia.app.ui.home.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/miningScreen"
+        android:name="com.miningmafia.app.ui.mining.MiningFragment"
+        android:label="MiningFragment" />
+    <fragment
+        android:id="@+id/accountsScreen"
+        android:name="com.miningmafia.app.ui.accounts.AccountsFragment"
+        android:label="AccountsFragment" />
+    <fragment
+        android:id="@+id/walletScreen"
+        android:name="com.miningmafia.app.ui.wallet.WalletFragment"
+        android:label="WalletFragment" />
+    <fragment
+        android:id="@+id/transactionsScreen"
+        android:name="com.miningmafia.app.ui.transactions.TransactionsFragment"
+        android:label="TransactionsFragment" />
+    <fragment
+        android:id="@+id/withdrawalScreen"
+        android:name="com.miningmafia.app.ui.withdrawal.WithdrawalFragment"
+        android:label="WithdrawalFragment" />
+    <fragment
+        android:id="@+id/settingsScreen"
+        android:name="com.miningmafia.app.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+</navigation>

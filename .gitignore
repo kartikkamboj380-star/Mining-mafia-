@@ -1,0 +1,32 @@
+# Built application files
+*.apk
+*.aab
+
+# Gradle
+.gradle/
+build/
+
+# Local configuration file (sensitive - contains signing config)
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Keystore files
+*.jks
+*.keystore
+*.key
+
+# Google services config (do NOT commit - contains Firebase project info)
+app/google-services.json
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+
+# OS
+.DS_Store
+Thumbs.db

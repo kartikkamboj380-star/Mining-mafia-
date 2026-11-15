@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mining Mafia</string>
+
+    <!-- Google Sign-In web client ID - replace with your actual value from Google Cloud Console -->
+    <string name="default_web_client_id">YOUR_GOOGLE_WEB_CLIENT_ID</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_mining">Mining</string>
+    <string name="nav_accounts">Accounts</string>
+    <string name="nav_wallet">Wallet</string>
+    <string name="nav_transactions">Transactions</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home -->
+    <string name="home_combined_balance">Combined Balance</string>
+    <string name="home_verified">Verified</string>
+    <string name="home_mining_status">Mining Status</string>
+    <string name="home_hashrate">Hashrate</string>
+    <string name="home_connected_accounts">Connected Accounts</string>
+    <string name="home_todays_rewards">Today\'s Rewards</string>
+    <string name="home_temperature">Temperature</string>
+    <string name="home_battery">Battery</string>
+    <string name="home_no_accounts">No accounts connected</string>
+    <string name="home_connect_account">Connect an account</string>
+
+    <!-- Mining -->
+    <string name="mining_title">Mining</string>
+    <string name="mining_start">Start Mining</string>
+    <string name="mining_stop">Stop Mining</string>
+    <string name="mining_status_idle">Idle</string>
+    <string name="mining_status_mining">Mining</string>
+    <string name="mining_status_offline">Offline</string>
+    <string name="mining_status_error">Error</string>
+    <string name="mining_hashrate">Hashrate</string>
+    <string name="mining_accepted_shares">Accepted Shares</string>
+    <string name="mining_rejected_shares">Rejected Shares</string>
+    <string name="mining_uptime">Uptime</string>
+    <string name="mining_verified_rewards">Verified Rewards</string>
+    <string name="mining_pool_status">Pool Status</string>
+    <string name="mining_worker_id">Worker ID</string>
+    <string name="mining_not_available">Mining integration not yet configured</string>
+    <string name="mining_configure_backend">Configure backend in Settings</string>
+
+    <!-- Accounts -->
+    <string name="accounts_title">Accounts</string>
+    <string name="accounts_add">Add Account</string>
+    <string name="accounts_google">Continue with Google</string>
+    <string name="accounts_email">Email / Password</string>
+    <string name="accounts_connected">Connected</string>
+    <string name="accounts_disconnected">Disconnected</string>
+    <string name="accounts_session_expired">Session expired - reconnect</string>
+    <string name="accounts_disconnect">Disconnect</string>
+    <string name="accounts_disconnect_confirm">Disconnect this account? Its balance will no longer be aggregated.</string>
+    <string name="accounts_none">No accounts connected</string>
+
+    <!-- Wallet -->
+    <string name="wallet_title">Wallet</string>
+    <string name="wallet_total_balance">Total Verified Balance</string>
+    <string name="wallet_pending">Pending Rewards</string>
+    <string name="wallet_confirmed">Confirmed Rewards</string>
+    <string name="wallet_by_account">Balance by Account</string>
+    <string name="wallet_currency">Currency</string>
+    <string name="wallet_no_data">No wallet data</string>
+    <string name="wallet_provider_limitation">This provider does not expose an authorized balance API.</string>
+
+    <!-- Transactions -->
+    <string name="transactions_title">Transactions</string>
+    <string name="transactions_none">No transactions</string>
+    <string name="transactions_reward">Reward</string>
+    <string name="transactions_withdrawal">Withdrawal</string>
+    <string name="transactions_deposit">Deposit</string>
+    <string name="transactions_pending">Pending</string>
+    <string name="transactions_confirmed">Confirmed</string>
+    <string name="transactions_failed">Failed</string>
+
+    <!-- Withdrawal -->
+    <string name="withdrawal_title">Withdrawal</string>
+    <string name="withdrawal_destination">Destination Address</string>
+    <string name="withdrawal_network">Network</string>
+    <string name="withdrawal_currency">Currency</string>
+    <string name="withdrawal_amount">Amount</string>
+    <string name="withdrawal_minimum">Minimum withdrawal</string>
+    <string name="withdrawal_available">Available balance</string>
+    <string name="withdrawal_submit">Confirm &amp; Submit</string>
+    <string name="withdrawal_confirm">Confirm withdrawal</string>
+    <string name="withdrawal_confirm_msg">This will send %1$s to %2$s on %3$s and cannot be reversed.</string>
+    <string name="withdrawal_history">Withdrawal History</string>
+    <string name="withdrawal_saved_destinations">Saved Destinations</string>
+    <string name="withdrawal_add_destination">Add Destination</string>
+    <string name="withdrawal_edit">Edit</string>
+    <string name="withdrawal_delete">Delete</string>
+    <string name="withdrawal_submitted">Withdrawal submitted - awaiting provider confirmation</string>
+    <string name="withdrawal_not_confirmed">Not confirmed by provider</string>
+
+    <!-- Auth -->
+    <string name="auth_register">Register</string>
+    <string name="auth_login">Login</string>
+    <string name="auth_google">Sign in with Google</string>
+    <string name="auth_email">Email</string>
+    <string name="auth_password">Password</string>
+    <string name="auth_confirm_password">Confirm Password</string>
+    <string name="auth_forgot_password">Forgot password?</string>
+    <string name="auth_reset_password">Reset Password</string>
+    <string name="auth_verify_email">Verify Email</string>
+    <string name="auth_email_verified">Email verified</string>
+    <string name="auth_email_not_verified">Email not verified</string>
+    <string name="auth_logout">Logout</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_backend_url">Backend Base URL</string>
+    <string name="settings_backend_hint">https://your-backend.example.com/api/</string>
+    <string name="settings_backend_save">Save Backend URL</string>
+    <string name="settings_backend_not_configured">Backend not configured</string>
+    <string name="settings_backend_configured">Backend configured</string>
+    <string name="settings_battery_aware">Battery-aware operation</string>
+    <string name="settings_temp_monitor">Temperature monitoring</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_about">About</string>
+    <string name="settings_disclaimer">Mining data comes from your authorized provider only. No fake statistics are shown.</string>
+
+    <!-- Errors / states -->
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_server">Server error. Please try again later.</string>
+    <string name="error_auth">Authentication error. Please log in again.</string>
+    <string name="error_unknown">An unexpected error occurred.</string>
+    <string name="loading">Loading...</string>
+    <string name="retry">Retry</string>
+</resources>
