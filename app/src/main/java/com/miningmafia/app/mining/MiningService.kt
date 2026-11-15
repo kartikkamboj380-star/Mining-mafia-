@@ -5,6 +5,8 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.Network
 import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
@@ -32,6 +34,7 @@ class MiningService : Service() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var wakeLock: PowerManager.WakeLock? = null
     private var notifier: Job? = null
+    private var networkCallback: ConnectivityManager.NetworkCallback? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -42,9 +45,16 @@ class MiningService : Service() {
             stopSelf()
             return START_NOT_STICKY
         }
+        if (intent?.action == ACTION_PAUSE || intent?.action == ACTION_RESUME) {
+            val pause = intent.action == ACTION_PAUSE
+            MiningRegistry.setPausedAll(pause)
+            startForegroundCompat(buildNotification(if (pause) "Paused" else "Resuming…", pause))
+            return START_STICKY
+        }
 
         // Must promote to foreground immediately after a startForegroundService() call.
-        startForegroundCompat(buildNotification("Starting mining…"))
+        startForegroundCompat(buildNotification("Starting mining…", MiningRegistry.paused))
+        registerNetworkRecovery()
 
         val prefs = AppPrefs(this)
         val requested = intent?.getLongArrayExtra(EXTRA_ACCOUNT_IDS)?.toSet()
@@ -89,7 +99,8 @@ class MiningService : Service() {
                 val accepted = map.values.sumOf { it.accepted }
                 val rejected = map.values.sumOf { it.rejected }
                 updateNotification(
-                    "${map.size} session(s) · ${formatHashrate(total)} · shares $accepted ✓ / $rejected ✗"
+                    "${map.size} session(s) · ${formatHashrate(total)} · shares $accepted ✓ / $rejected ✗",
+                    MiningRegistry.paused,
                 )
                 if (!MiningRegistry.hasSessions()) {
                     AppPrefs(this@MiningService).wantMining = false
@@ -109,12 +120,31 @@ class MiningService : Service() {
         }
     }
 
-    private fun updateNotification(text: String) {
-        getSystemService(android.app.NotificationManager::class.java)
-            .notify(NOTIFICATION_ID, buildNotification(text))
+    /** Reconnects every session when the device gains a network (Wi-Fi <-> mobile data, airplane mode). */
+    private fun registerNetworkRecovery() {
+        if (networkCallback != null) return
+        val cm = getSystemService(ConnectivityManager::class.java) ?: return
+        val callback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                MiningRegistry.reconnectAll()
+            }
+        }
+        runCatching { cm.registerDefaultNetworkCallback(callback) }
+        networkCallback = callback
     }
 
-    private fun buildNotification(text: String): Notification {
+    private fun unregisterNetworkRecovery() {
+        val cb = networkCallback ?: return
+        networkCallback = null
+        getSystemService(ConnectivityManager::class.java)?.let { runCatching { it.unregisterNetworkCallback(cb) } }
+    }
+
+    private fun updateNotification(text: String, paused: Boolean = MiningRegistry.paused) {
+        getSystemService(android.app.NotificationManager::class.java)
+            .notify(NOTIFICATION_ID, buildNotification(text, paused))
+    }
+
+    private fun buildNotification(text: String, paused: Boolean): Notification {
         val openApp = PendingIntent.getActivity(
             this, 0, Intent(this, MainActivity::class.java),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
@@ -131,6 +161,16 @@ class MiningService : Service() {
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
+            .addAction(
+                0,
+                if (paused) "Resume" else "Pause",
+                PendingIntent.getService(
+                    this, 2,
+                    Intent(this, MiningService::class.java)
+                        .setAction(if (paused) ACTION_RESUME else ACTION_PAUSE),
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+                ),
+            )
             .addAction(0, "Stop", stop)
             .build()
     }
@@ -145,6 +185,7 @@ class MiningService : Service() {
     }
 
     override fun onDestroy() {
+        unregisterNetworkRecovery()
         notifier?.cancel()
         scope.coroutineContext[Job]?.cancel()
         runCatching { wakeLock?.takeIf { it.isHeld }?.release() }
@@ -153,6 +194,8 @@ class MiningService : Service() {
 
     companion object {
         const val ACTION_STOP = "com.miningmafia.app.action.STOP_MINING"
+        const val ACTION_PAUSE = "com.miningmafia.app.action.PAUSE_MINING"
+        const val ACTION_RESUME = "com.miningmafia.app.action.RESUME_MINING"
         const val EXTRA_ACCOUNT_IDS = "account_ids"
         private const val NOTIFICATION_ID = 4201
         private const val NOTIFY_INTERVAL_MS = 3_000L
@@ -165,6 +208,14 @@ class MiningService : Service() {
 
         fun stop(context: Context) {
             context.startService(Intent(context, MiningService::class.java).setAction(ACTION_STOP))
+        }
+
+        fun pause(context: Context) {
+            context.startService(Intent(context, MiningService::class.java).setAction(ACTION_PAUSE))
+        }
+
+        fun resume(context: Context) {
+            context.startService(Intent(context, MiningService::class.java).setAction(ACTION_RESUME))
         }
     }
 }

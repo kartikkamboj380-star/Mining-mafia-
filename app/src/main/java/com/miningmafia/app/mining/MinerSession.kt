@@ -24,7 +24,7 @@ data class PoolConfig(
     val password: String = "x",
 )
 
-enum class MinerState { CONNECTING, MINING, THROTTLED, RECONNECTING, STOPPED }
+enum class MinerState { CONNECTING, MINING, PAUSED, THROTTLED, RECONNECTING, STOPPED }
 
 data class SessionStats(
     val accountId: Long,
@@ -68,6 +68,7 @@ class MinerSession(
     private val totalHashes = AtomicLong(0)
     private val extranonceCounter = AtomicLong(0)
     private val failures = AtomicInteger(0)
+    private val paused = AtomicBoolean(false)
     @Volatile private var subscription: Pair<ByteArray, Int>? = null
     @Volatile private var activeJob: JobSnapshot? = null
     @Volatile private var client: StratumClient? = null
@@ -120,6 +121,17 @@ class MinerSession(
         jobs += scope.launch(Dispatchers.Default) { runTicker() }
     }
 
+    /** User pause: workers stop hashing but the connection stays open. */
+    fun setPaused(value: Boolean) {
+        paused.set(value)
+    }
+
+    /** Drops the current connection so the connect loop re-establishes it immediately. */
+    fun reconnectNow() {
+        failures.set(0)
+        client?.close()
+    }
+
     fun stop() {
         running.set(false)
         activeJob = null
@@ -167,12 +179,15 @@ class MinerSession(
             val rate = if (seconds > 0) (hashes - lastHashes) / seconds else 0.0
             lastHashes = hashes
             lastTime = now
-            val pause = throttled()
+            val pausedNow = paused.get()
+            val throttle = throttled()
             _stats.update { s ->
                 val state = when {
                     s.state == MinerState.STOPPED -> s.state
-                    pause && s.state == MinerState.MINING -> MinerState.THROTTLED
-                    !pause && s.state == MinerState.THROTTLED -> MinerState.MINING
+                    pausedNow && s.state != MinerState.PAUSED -> MinerState.PAUSED
+                    !pausedNow && s.state == MinerState.PAUSED -> MinerState.MINING
+                    throttle && s.state == MinerState.MINING -> MinerState.THROTTLED
+                    !throttle && s.state == MinerState.THROTTLED -> MinerState.MINING
                     else -> s.state
                 }
                 s.copy(hashrate = rate, state = state)
@@ -184,8 +199,8 @@ class MinerSession(
         runCatching { Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND) }
         val md = MessageDigest.getInstance("SHA-256")
         while (running.get()) {
-            if (throttled()) {
-                Thread.sleep(1_000)
+            if (paused.get() || throttled()) {
+                Thread.sleep(500)
                 continue
             }
             val snap = activeJob
@@ -220,7 +235,7 @@ class MinerSession(
                 if (local == BATCH) {
                     totalHashes.addAndGet(local)
                     local = 0
-                    if (throttled()) break
+                    if (paused.get() || throttled()) break
                 }
             }
             totalHashes.addAndGet(local)

@@ -73,6 +73,12 @@ fun MiningScreen(vm: AppViewModel) {
                 }
                 OutlinedButton(onClick = { vm.stopMining() }, modifier = Modifier.weight(1f)) { Text("Stop all") }
             }
+            if (sessions.isNotEmpty()) {
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
+                    OutlinedButton(onClick = { vm.pauseMining() }, modifier = Modifier.weight(1f)) { Text("Pause") }
+                    OutlinedButton(onClick = { vm.resumeMining() }, modifier = Modifier.weight(1f)) { Text("Resume") }
+                }
+            }
         }
 
         SectionLabel("Live statistics")

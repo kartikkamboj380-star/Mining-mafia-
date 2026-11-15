@@ -32,6 +32,7 @@ object MiningRegistry {
         collectors[accountId] = scope.launch {
             session.stats.collect { st -> _allStats.update { it + (accountId to st) } }
         }
+        session.setPaused(paused)
         session.start()
         return Result.success(Unit)
     }
@@ -46,6 +47,20 @@ object MiningRegistry {
     @Synchronized
     fun stopAll() {
         sessions.keys.toList().forEach { stop(it) }
+    }
+
+    @Volatile var paused: Boolean = false
+        private set
+
+    @Synchronized
+    fun setPausedAll(value: Boolean) {
+        paused = value
+        sessions.values.forEach { it.setPaused(value) }
+    }
+
+    /** Re-establishes every connection, e.g. after the device network changed. */
+    fun reconnectAll() {
+        sessions.values.forEach { it.reconnectNow() }
     }
 
     fun isRunning(accountId: Long): Boolean = sessions.containsKey(accountId)

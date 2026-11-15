@@ -138,6 +138,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         MiningService.start(getApplication(), ids)
     }
 
+    fun pauseMining() {
+        MiningService.pause(getApplication())
+    }
+
+    fun resumeMining() {
+        MiningService.resume(getApplication())
+    }
+
     fun stopMining() {
         prefs.wantMining = false
         MiningService.stop(getApplication())
