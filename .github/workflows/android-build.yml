@@ -60,12 +60,17 @@ jobs:
         if: failure()
         shell: bash
         run: |
-          grep -nE '^e: |What went wrong|^> |FAILED|Exception' build-logs.txt 2>/dev/null | head -150 | while IFS= read -r line; do
-            msg=$(printf '%s' "$line" | sed -e 's/%/%25/g' -e 's/\r/%0D/g' -e 's/\n/%0A/g')
-            echo "::error title=build::$msg"
-          done
-          echo "--- tail of build log ---"
-          tail -n 120 build-logs.txt 2>/dev/null || true
+          # Annotations are readable through the GitHub API, so put the most useful lines there.
+          {
+            grep -E '^e: |What went wrong|FAILED|Exception|error:|Caused by' build-logs.txt | head -60
+            echo '---- tail ----'
+            tail -n 90 build-logs.txt
+          } > failure-summary.txt 2>/dev/null || true
+          python3 - <<'PY'
+import json, os
+text = open('failure-summary.txt', encoding='utf-8', errors='replace').read()[-12000:]
+print("::error title=build-failure::" + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
+PY
 
       - name: Upload build log
         if: always()
