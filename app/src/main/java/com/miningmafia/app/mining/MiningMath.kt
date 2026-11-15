@@ -83,7 +83,7 @@ object MiningMath {
      */
     fun shareTarget(difficulty: Double): ByteArray {
         val d = if (difficulty.isFinite() && difficulty > 0) difficulty else 1.0
-        val target = BigDecimal(DIFF1).divide(BigDecimal(d), MathContext(120)).toBigInteger()
+        val target = BigDecimal(DIFF1_TARGET).divide(BigDecimal(d), MathContext(120)).toBigInteger()
         val raw = target.toByteArray()
         val out = ByteArray(32)
         val copy = minOf(raw.size, 32)
