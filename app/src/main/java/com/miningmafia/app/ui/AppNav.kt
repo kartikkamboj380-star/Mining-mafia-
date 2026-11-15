@@ -20,19 +20,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.findStartDestination
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
-import android.app.Activity
-import androidx.compose.runtime.rememberCoroutineScope
-import kotlinx.coroutines.launch
 import com.miningmafia.app.ui.screens.AccountsScreen
 import com.miningmafia.app.ui.screens.AuthScreen
 import com.miningmafia.app.ui.screens.HistoryScreen
@@ -134,7 +128,7 @@ fun MainScaffold(vm: AppViewModel, onAddAccount: () -> Unit) {
 
 private fun navigateTab(nav: NavHostController, route: String) {
     nav.navigate(route) {
-        popUpTo(nav.graph.findStartDestination().id) { saveState = true }
+        popUpTo(nav.graph.startDestinationId) { saveState = true }
         launchSingleTop = true
         restoreState = true
     }

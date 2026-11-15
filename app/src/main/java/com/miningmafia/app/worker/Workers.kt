@@ -7,7 +7,7 @@ import com.miningmafia.app.data.AppPrefs
 import com.miningmafia.app.data.AppRepository
 import com.miningmafia.app.mining.MiningRegistry
 import com.miningmafia.app.mining.MiningService
-import androidx.work.Result as WorkResult
+import androidx.work.ListenableWorker.Result as WorkResult
 
 /**
  * Periodic watchdog: if the user wants mining but the service is gone (process killed,
