@@ -66,11 +66,8 @@ jobs:
             echo '---- tail ----'
             tail -n 90 build-logs.txt
           } > failure-summary.txt 2>/dev/null || true
-          python3 - <<'PY'
-import json, os
-text = open('failure-summary.txt', encoding='utf-8', errors='replace').read()[-12000:]
-print("::error title=build-failure::" + text.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A'))
-PY
+          msg=$(head -c 12000 failure-summary.txt | sed -e 's/%/%25/g' -e 's/\r/%0D/g' -e ':a;N;$!ba;s/\n/%0A/g')
+          echo "::error title=build-failure::$msg"
 
       - name: Upload build log
         if: always()
