@@ -37,7 +37,7 @@ class StratumIntegrationTest {
     private val difficulty = 0.00001 // easy enough to find shares within seconds
     private val user = "testaddr.worker1"
 
-    private class MockPool : AutoCloseable {
+    private inner class MockPool : AutoCloseable {
         private val server = ServerSocket(0, 10, InetAddress.getLoopbackAddress())
         val port: Int = server.localPort
         val submits = CopyOnWriteArrayList<JSONArray>()
@@ -47,6 +47,10 @@ class StratumIntegrationTest {
         private val thread = Thread({ serve() }, "mock-stratum").apply { isDaemon = true }
 
         fun start() = thread.start()
+
+        override fun close() {
+            runCatching { server.close() }
+        }
 
         // Set by the test before start.
         lateinit var job: JSONArray
