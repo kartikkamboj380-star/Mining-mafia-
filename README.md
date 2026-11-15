@@ -44,6 +44,8 @@ as reference material and is not compiled by the Gradle build.
 
 ### Option A: download the APK from GitHub Actions
 
+Verified build: [run #43671400255](https://github.com/kartikkamboj380-star/Mining-mafia-/actions/runs/43671400255) passed unit tests and produced `mining-mafia-debug-apk` (about 11.5 MB). Artifacts are kept for 30 days, so rerun the workflow if the link has expired.
+
 1. Open the **Actions** tab of this repository and select the latest **Android build** run.
 2. Download the **mining-mafia-debug-apk** artifact and unzip it.
 3. On the phone, allow installs from your browser or file manager, then install `app-debug.apk`.
