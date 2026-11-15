@@ -1,0 +1,12 @@
+package p098j7;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+/* JADX INFO: loaded from: classes3.dex */
+@Retention(RetentionPolicy.RUNTIME)
+public @interface c {
+    String[] alternate() default {};
+
+    String value();
+}

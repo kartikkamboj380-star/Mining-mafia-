@@ -1,0 +1,8 @@
+package U0;
+
+import java.util.concurrent.Executor;
+
+/* JADX INFO: loaded from: classes.dex */
+public interface a extends Executor {
+    boolean I0();
+}

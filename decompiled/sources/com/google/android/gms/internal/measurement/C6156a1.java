@@ -1,0 +1,33 @@
+package com.google.android.gms.internal.measurement;
+
+import com.google.android.gms.common.internal.Preconditions;
+import java.util.Objects;
+
+/* JADX INFO: renamed from: com.google.android.gms.internal.measurement.a1, reason: case insensitive filesystem */
+/* JADX INFO: loaded from: classes2.dex */
+final class C6156a1 extends AbstractRunnableC6300q1 {
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    final /* synthetic */ BinderC6307r0 f36617e;
+
+    /* JADX INFO: renamed from: f, reason: collision with root package name */
+    final /* synthetic */ B1 f36618f;
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    C6156a1(B1 b10, BinderC6307r0 binderC6307r0) {
+        super(b10, true);
+        this.f36617e = binderC6307r0;
+        Objects.requireNonNull(b10);
+        this.f36618f = b10;
+    }
+
+    @Override // com.google.android.gms.internal.measurement.AbstractRunnableC6300q1
+    final void a() {
+        ((InterfaceC6334u0) Preconditions.checkNotNull(this.f36618f.n())).getGmpAppId(this.f36617e);
+    }
+
+    @Override // com.google.android.gms.internal.measurement.AbstractRunnableC6300q1
+    protected final void b() {
+        this.f36617e.f0(null);
+    }
+}

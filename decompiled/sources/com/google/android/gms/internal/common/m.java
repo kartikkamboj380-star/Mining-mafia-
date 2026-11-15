@@ -1,0 +1,19 @@
+package com.google.android.gms.internal.common;
+
+import java.util.ListIterator;
+
+/* JADX INFO: loaded from: classes2.dex */
+public abstract class m extends l implements ListIterator {
+    protected m() {
+    }
+
+    @Override // java.util.ListIterator
+    public final void add(Object obj) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override // java.util.ListIterator
+    public final void set(Object obj) {
+        throw new UnsupportedOperationException();
+    }
+}

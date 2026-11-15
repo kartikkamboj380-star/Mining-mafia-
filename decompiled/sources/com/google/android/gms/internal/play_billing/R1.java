@@ -1,0 +1,26 @@
+package com.google.android.gms.internal.play_billing;
+
+/* JADX INFO: loaded from: classes2.dex */
+public final class R1 extends AbstractC6437n0 implements W0 {
+    /* synthetic */ R1(Q1 q10) {
+        super(T1.zzb);
+    }
+
+    public final R1 m(Z1 z9) {
+        i();
+        T1.A((T1) this.f37311b, (C6399d2) z9.g());
+        return this;
+    }
+
+    public final R1 n(C6470v2 c6470v2) {
+        i();
+        T1.C((T1) this.f37311b, c6470v2);
+        return this;
+    }
+
+    public final R1 o(int i10) {
+        i();
+        T1.D((T1) this.f37311b, i10);
+        return this;
+    }
+}

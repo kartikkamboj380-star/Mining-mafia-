@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+    <style name="Theme.BootSplash.DayNight" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+    <style name="Theme.BootSplash.EdgeToEdge" parent="@style/Theme.BootSplash.EdgeToEdge.Common">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?attr/darkContentBarsStyle</item>
+        <item name="android:windowLightNavigationBar">?attr/darkContentBarsStyle</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">1</item>
+        <item name="android:enforceStatusBarContrast">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+    </style>
+</resources>

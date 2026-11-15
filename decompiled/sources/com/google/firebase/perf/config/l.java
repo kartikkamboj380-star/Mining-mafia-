@@ -1,0 +1,36 @@
+package com.google.firebase.perf.config;
+
+/* JADX INFO: loaded from: classes3.dex */
+public final class l extends v {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    private static l f40389a;
+
+    protected l() {
+    }
+
+    protected static synchronized l e() {
+        try {
+            if (f40389a == null) {
+                f40389a = new l();
+            }
+        } catch (Throwable th) {
+            throw th;
+        }
+        return f40389a;
+    }
+
+    @Override // com.google.firebase.perf.config.v
+    protected String a() {
+        return "com.google.firebase.perf.SdkEnabled";
+    }
+
+    @Override // com.google.firebase.perf.config.v
+    protected String c() {
+        return "fpr_enabled";
+    }
+
+    protected Boolean d() {
+        return Boolean.TRUE;
+    }
+}

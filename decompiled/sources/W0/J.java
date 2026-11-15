@@ -1,0 +1,7 @@
+package W0;
+
+/* JADX INFO: loaded from: classes.dex */
+public abstract /* synthetic */ class J {
+    public static /* synthetic */ void a() {
+    }
+}

@@ -1,0 +1,8 @@
+package com.google.android.gms.internal.common;
+
+/* JADX INFO: loaded from: classes2.dex */
+public final class J extends RuntimeException {
+    public J(String str) {
+        super(str);
+    }
+}

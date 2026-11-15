@@ -1,0 +1,43 @@
+package com.google.firebase.crashlytics;
+
+import androidx.annotation.Keep;
+import com.google.firebase.components.ComponentRegistrar;
+import java.util.List;
+import kotlin.Metadata;
+import kotlin.collections.CollectionsKt;
+import kotlin.jvm.internal.DefaultConstructorMarker;
+import org.jetbrains.annotations.NotNull;
+import p057f6.C6982c;
+
+/*  JADX ERROR: Error in decompile pass: KotlinMetadataDecompile
+    java.lang.IllegalArgumentException: Provided Metadata instance does not have metadataVersion in it and therefore is malformed and cannot be read.
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.checkMetadataVersionForRead(JvmReadUtils.kt:79)
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.readMetadataImpl$kotlin_metadata_jvm(JvmReadUtils.kt:46)
+    	at kotlin.metadata.jvm.KotlinClassMetadata$Companion.readLenient(KotlinClassMetadata.kt:418)
+    	at jadx.plugins.kotlin.metadata.utils.KotlinMetadataExtKt.getKotlinClassMetadata(KotlinMetadataExt.kt:68)
+    	at jadx.plugins.kotlin.metadata.utils.KmClassWrapper$Companion.getWrapper(KmClassWrapper.kt:31)
+    	at jadx.plugins.kotlin.metadata.pass.KotlinMetadataDecompilePass.visit(KotlinMetadataDecompilePass.kt:33)
+    */
+/* JADX INFO: loaded from: classes3.dex */
+@Keep
+@Metadata
+public final class FirebaseCrashlyticsKtxRegistrar implements ComponentRegistrar {
+
+    @NotNull
+    public static final a Companion = new a(null);
+
+    public static final class a {
+        public /* synthetic */ a(DefaultConstructorMarker defaultConstructorMarker) {
+            this();
+        }
+
+        private a() {
+        }
+    }
+
+    @Override // com.google.firebase.components.ComponentRegistrar
+    @NotNull
+    public List<C6982c> getComponents() {
+        return CollectionsKt.i();
+    }
+}

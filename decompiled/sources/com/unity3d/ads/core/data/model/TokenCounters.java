@@ -1,0 +1,102 @@
+package com.unity3d.ads.core.data.model;
+
+import kotlin.Metadata;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*  JADX ERROR: Error in decompile pass: KotlinMetadataDecompile
+    java.lang.IllegalArgumentException: Provided Metadata instance does not have metadataVersion in it and therefore is malformed and cannot be read.
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.checkMetadataVersionForRead(JvmReadUtils.kt:79)
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.readMetadataImpl$kotlin_metadata_jvm(JvmReadUtils.kt:46)
+    	at kotlin.metadata.jvm.KotlinClassMetadata$Companion.readLenient(KotlinClassMetadata.kt:418)
+    	at jadx.plugins.kotlin.metadata.utils.KotlinMetadataExtKt.getKotlinClassMetadata(KotlinMetadataExt.kt:68)
+    	at jadx.plugins.kotlin.metadata.utils.KmClassWrapper$Companion.getWrapper(KmClassWrapper.kt:31)
+    	at jadx.plugins.kotlin.metadata.pass.KotlinMetadataDecompilePass.visit(KotlinMetadataDecompilePass.kt:33)
+    */
+/* JADX INFO: loaded from: classes3.dex */
+@Metadata
+public final class TokenCounters {
+    private int seq;
+    private int starts;
+    private int wins;
+
+    public TokenCounters(int i10, int i11, int i12) {
+        this.seq = i10;
+        this.wins = i11;
+        this.starts = i12;
+    }
+
+    public static /* synthetic */ TokenCounters copy$default(TokenCounters tokenCounters, int i10, int i11, int i12, int i13, Object obj) {
+        if ((i13 & 1) != 0) {
+            i10 = tokenCounters.seq;
+        }
+        if ((i13 & 2) != 0) {
+            i11 = tokenCounters.wins;
+        }
+        if ((i13 & 4) != 0) {
+            i12 = tokenCounters.starts;
+        }
+        return tokenCounters.copy(i10, i11, i12);
+    }
+
+    public final int component1() {
+        return this.seq;
+    }
+
+    public final int component2() {
+        return this.wins;
+    }
+
+    public final int component3() {
+        return this.starts;
+    }
+
+    @NotNull
+    public final TokenCounters copy(int i10, int i11, int i12) {
+        return new TokenCounters(i10, i11, i12);
+    }
+
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof TokenCounters)) {
+            return false;
+        }
+        TokenCounters tokenCounters = (TokenCounters) obj;
+        return this.seq == tokenCounters.seq && this.wins == tokenCounters.wins && this.starts == tokenCounters.starts;
+    }
+
+    public final int getSeq() {
+        return this.seq;
+    }
+
+    public final int getStarts() {
+        return this.starts;
+    }
+
+    public final int getWins() {
+        return this.wins;
+    }
+
+    public int hashCode() {
+        return (((Integer.hashCode(this.seq) * 31) + Integer.hashCode(this.wins)) * 31) + Integer.hashCode(this.starts);
+    }
+
+    public final void setSeq(int i10) {
+        this.seq = i10;
+    }
+
+    public final void setStarts(int i10) {
+        this.starts = i10;
+    }
+
+    public final void setWins(int i10) {
+        this.wins = i10;
+    }
+
+    @NotNull
+    public String toString() {
+        return "TokenCounters(seq=" + this.seq + ", wins=" + this.wins + ", starts=" + this.starts + ')';
+    }
+}
