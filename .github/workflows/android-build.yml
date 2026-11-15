@@ -45,10 +45,24 @@ jobs:
           gradle-version: "8.7"
 
       - name: Run unit tests
-        run: gradle --no-daemon :app:testDebugUnitTest --stacktrace
+        shell: bash
+        run: |
+          set -o pipefail
+          gradle --no-daemon :app:testDebugUnitTest --stacktrace 2>&1 | tee build-logs.txt
 
       - name: Build debug APK
-        run: gradle --no-daemon :app:assembleDebug --stacktrace
+        shell: bash
+        run: |
+          set -o pipefail
+          gradle --no-daemon :app:assembleDebug --stacktrace 2>&1 | tee -a build-logs.txt
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: build-logs.txt
+          if-no-files-found: ignore
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
