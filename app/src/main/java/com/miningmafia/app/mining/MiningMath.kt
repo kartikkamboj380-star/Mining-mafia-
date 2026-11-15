@@ -1,6 +1,8 @@
 package com.miningmafia.app.mining
 
+import java.math.BigDecimal
 import java.math.BigInteger
+import java.math.MathContext
 import java.security.MessageDigest
 
 /**
@@ -75,11 +77,13 @@ object MiningMath {
         header[79] = (nonce shr 24).toByte()
     }
 
-    /** 32-byte big-endian target for a share difficulty (difficulty 1 = DIFF1 target). */
+    /**
+     * 32-byte big-endian target for a share difficulty (difficulty 1 = DIFF1 target).
+     * Uses exact BigDecimal division so fractional difficulties are not truncated.
+     */
     fun shareTarget(difficulty: Double): ByteArray {
         val d = if (difficulty.isFinite() && difficulty > 0) difficulty else 1.0
-        val scaled = BigInteger.valueOf((d * 1_000_000).toLong().coerceAtLeast(1L))
-        val target = DIFF1_TARGET.multiply(BigInteger.valueOf(1_000_000L)).divide(scaled)
+        val target = BigDecimal(DIFF1).divide(BigDecimal(d), MathContext(120)).toBigInteger()
         val raw = target.toByteArray()
         val out = ByteArray(32)
         val copy = minOf(raw.size, 32)
